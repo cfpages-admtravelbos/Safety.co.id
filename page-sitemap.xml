@@ -1,242 +1,242 @@
 <?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="/main-sitemap.xsl"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd http://www.google.com/schemas/sitemap-image/1.1 http://www.google.com/schemas/sitemap-image/1.1/sitemap-image.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 	<url>
-		<loc>/</loc>
+		<loc>https://safety.co.id/</loc>
 		<lastmod>2023-12-13T11:30:32+00:00</lastmod>
 		<image:image>
-			<image:loc>/wp-content/uploads/2023/11/safety-stuff-1.png</image:loc>
+			<image:loc>https://safety.co.id/wp-content/uploads/2023/11/safety-stuff-1.png</image:loc>
 		</image:image>
 		<image:image>
-			<image:loc>/wp-content/uploads/2023/11/Head-Protection.jpg</image:loc>
+			<image:loc>https://safety.co.id/wp-content/uploads/2023/11/Head-Protection.jpg</image:loc>
 		</image:image>
 		<image:image>
-			<image:loc>/wp-content/uploads/2023/11/Eye-Protection.jpg</image:loc>
+			<image:loc>https://safety.co.id/wp-content/uploads/2023/11/Eye-Protection.jpg</image:loc>
 		</image:image>
 		<image:image>
-			<image:loc>/wp-content/uploads/2023/11/Hearing-Protection.jpg</image:loc>
+			<image:loc>https://safety.co.id/wp-content/uploads/2023/11/Hearing-Protection.jpg</image:loc>
 		</image:image>
 		<image:image>
-			<image:loc>/wp-content/uploads/2023/11/Face-Protection.jpg</image:loc>
+			<image:loc>https://safety.co.id/wp-content/uploads/2023/11/Face-Protection.jpg</image:loc>
 		</image:image>
 		<image:image>
-			<image:loc>/wp-content/uploads/2023/11/Hand-Protection.jpg</image:loc>
+			<image:loc>https://safety.co.id/wp-content/uploads/2023/11/Hand-Protection.jpg</image:loc>
 		</image:image>
 		<image:image>
-			<image:loc>/wp-content/uploads/2023/11/Protection-Footwear.jpg</image:loc>
+			<image:loc>https://safety.co.id/wp-content/uploads/2023/11/Protection-Footwear.jpg</image:loc>
 		</image:image>
 		<image:image>
-			<image:loc>/wp-content/uploads/2023/11/Respiratory-Protection.jpg</image:loc>
+			<image:loc>https://safety.co.id/wp-content/uploads/2023/11/Respiratory-Protection.jpg</image:loc>
 		</image:image>
 		<image:image>
-			<image:loc>/wp-content/uploads/2023/11/Medical-First-Aid-Equipments.jpg</image:loc>
+			<image:loc>https://safety.co.id/wp-content/uploads/2023/11/Medical-First-Aid-Equipments.jpg</image:loc>
 		</image:image>
 		<image:image>
-			<image:loc>/wp-content/uploads/2023/11/Marine-Equipments.jpg</image:loc>
+			<image:loc>https://safety.co.id/wp-content/uploads/2023/11/Marine-Equipments.jpg</image:loc>
 		</image:image>
 		<image:image>
-			<image:loc>/wp-content/uploads/2023/11/Traffic-Equipments.jpg</image:loc>
+			<image:loc>https://safety.co.id/wp-content/uploads/2023/11/Traffic-Equipments.jpg</image:loc>
 		</image:image>
 		<image:image>
-			<image:loc>/wp-content/uploads/2023/11/Fall-Protection.jpg</image:loc>
+			<image:loc>https://safety.co.id/wp-content/uploads/2023/11/Fall-Protection.jpg</image:loc>
 		</image:image>
 		<image:image>
-			<image:loc>/wp-content/uploads/2023/11/Gas-Detector.jpg</image:loc>
+			<image:loc>https://safety.co.id/wp-content/uploads/2023/11/Gas-Detector.jpg</image:loc>
 		</image:image>
 	</url>
 	<url>
-		<loc>/berita</loc>
+		<loc>https://safety.co.id/berita</loc>
 		<lastmod>2023-12-13T11:33:21+00:00</lastmod>
 	</url>
 	<url>
-		<loc>/clothes-protection</loc>
+		<loc>https://safety.co.id/clothes-protection</loc>
 		<lastmod>2023-12-13T10:53:22+00:00</lastmod>
 		<image:image>
-			<image:loc>/wp-content/uploads/2023/11/lineboard-scaled.jpg</image:loc>
+			<image:loc>https://safety.co.id/wp-content/uploads/2023/11/lineboard-scaled.jpg</image:loc>
 		</image:image>
 		<image:image>
-			<image:loc>/wp-content/uploads/2023/11/lineboard-scaled.jpg</image:loc>
+			<image:loc>https://safety.co.id/wp-content/uploads/2023/11/lineboard-scaled.jpg</image:loc>
 		</image:image>
 	</url>
 	<url>
-		<loc>/traffic-equipments</loc>
+		<loc>https://safety.co.id/traffic-equipments</loc>
 		<lastmod>2023-12-13T10:51:42+00:00</lastmod>
 		<image:image>
-			<image:loc>/wp-content/uploads/2023/11/lineboard-scaled.jpg</image:loc>
+			<image:loc>https://safety.co.id/wp-content/uploads/2023/11/lineboard-scaled.jpg</image:loc>
 		</image:image>
 		<image:image>
-			<image:loc>/wp-content/uploads/2023/11/lineboard-scaled.jpg</image:loc>
+			<image:loc>https://safety.co.id/wp-content/uploads/2023/11/lineboard-scaled.jpg</image:loc>
 		</image:image>
 	</url>
 	<url>
-		<loc>/security-equipments-accessories</loc>
+		<loc>https://safety.co.id/security-equipments-accessories</loc>
 		<lastmod>2023-12-13T10:49:56+00:00</lastmod>
 		<image:image>
-			<image:loc>/wp-content/uploads/2023/11/lineboard-scaled.jpg</image:loc>
+			<image:loc>https://safety.co.id/wp-content/uploads/2023/11/lineboard-scaled.jpg</image:loc>
 		</image:image>
 		<image:image>
-			<image:loc>/wp-content/uploads/2023/11/lineboard-scaled.jpg</image:loc>
+			<image:loc>https://safety.co.id/wp-content/uploads/2023/11/lineboard-scaled.jpg</image:loc>
 		</image:image>
 	</url>
 	<url>
-		<loc>/respiratory-protection</loc>
+		<loc>https://safety.co.id/respiratory-protection</loc>
 		<lastmod>2023-12-13T10:47:38+00:00</lastmod>
 		<image:image>
-			<image:loc>/wp-content/uploads/2023/11/lineboard-scaled.jpg</image:loc>
+			<image:loc>https://safety.co.id/wp-content/uploads/2023/11/lineboard-scaled.jpg</image:loc>
 		</image:image>
 		<image:image>
-			<image:loc>/wp-content/uploads/2023/11/lineboard-scaled.jpg</image:loc>
+			<image:loc>https://safety.co.id/wp-content/uploads/2023/11/lineboard-scaled.jpg</image:loc>
 		</image:image>
 	</url>
 	<url>
-		<loc>/protection-footwear</loc>
+		<loc>https://safety.co.id/protection-footwear</loc>
 		<lastmod>2023-12-13T10:46:00+00:00</lastmod>
 		<image:image>
-			<image:loc>/wp-content/uploads/2023/11/lineboard-scaled.jpg</image:loc>
+			<image:loc>https://safety.co.id/wp-content/uploads/2023/11/lineboard-scaled.jpg</image:loc>
 		</image:image>
 		<image:image>
-			<image:loc>/wp-content/uploads/2023/11/lineboard-scaled.jpg</image:loc>
+			<image:loc>https://safety.co.id/wp-content/uploads/2023/11/lineboard-scaled.jpg</image:loc>
 		</image:image>
 	</url>
 	<url>
-		<loc>/medical-first-aid-equipments</loc>
+		<loc>https://safety.co.id/medical-first-aid-equipments</loc>
 		<lastmod>2023-12-13T10:44:30+00:00</lastmod>
 		<image:image>
-			<image:loc>/wp-content/uploads/2023/11/lineboard-scaled.jpg</image:loc>
+			<image:loc>https://safety.co.id/wp-content/uploads/2023/11/lineboard-scaled.jpg</image:loc>
 		</image:image>
 		<image:image>
-			<image:loc>/wp-content/uploads/2023/11/lineboard-scaled.jpg</image:loc>
+			<image:loc>https://safety.co.id/wp-content/uploads/2023/11/lineboard-scaled.jpg</image:loc>
 		</image:image>
 	</url>
 	<url>
-		<loc>/marine-equipments</loc>
+		<loc>https://safety.co.id/marine-equipments</loc>
 		<lastmod>2023-12-13T10:42:57+00:00</lastmod>
 		<image:image>
-			<image:loc>/wp-content/uploads/2023/11/lineboard-scaled.jpg</image:loc>
+			<image:loc>https://safety.co.id/wp-content/uploads/2023/11/lineboard-scaled.jpg</image:loc>
 		</image:image>
 		<image:image>
-			<image:loc>/wp-content/uploads/2023/11/lineboard-scaled.jpg</image:loc>
+			<image:loc>https://safety.co.id/wp-content/uploads/2023/11/lineboard-scaled.jpg</image:loc>
 		</image:image>
 	</url>
 	<url>
-		<loc>/hearing-protection</loc>
+		<loc>https://safety.co.id/hearing-protection</loc>
 		<lastmod>2023-12-13T10:40:24+00:00</lastmod>
 		<image:image>
-			<image:loc>/wp-content/uploads/2023/11/lineboard-scaled.jpg</image:loc>
+			<image:loc>https://safety.co.id/wp-content/uploads/2023/11/lineboard-scaled.jpg</image:loc>
 		</image:image>
 		<image:image>
-			<image:loc>/wp-content/uploads/2023/11/lineboard-scaled.jpg</image:loc>
+			<image:loc>https://safety.co.id/wp-content/uploads/2023/11/lineboard-scaled.jpg</image:loc>
 		</image:image>
 	</url>
 	<url>
-		<loc>/head-protection</loc>
+		<loc>https://safety.co.id/head-protection</loc>
 		<lastmod>2023-12-13T10:38:32+00:00</lastmod>
 		<image:image>
-			<image:loc>/wp-content/uploads/2023/11/lineboard-scaled.jpg</image:loc>
+			<image:loc>https://safety.co.id/wp-content/uploads/2023/11/lineboard-scaled.jpg</image:loc>
 		</image:image>
 		<image:image>
-			<image:loc>/wp-content/uploads/2023/11/lineboard-scaled.jpg</image:loc>
+			<image:loc>https://safety.co.id/wp-content/uploads/2023/11/lineboard-scaled.jpg</image:loc>
 		</image:image>
 	</url>
 	<url>
-		<loc>/hand-protection</loc>
+		<loc>https://safety.co.id/hand-protection</loc>
 		<lastmod>2023-12-13T10:36:21+00:00</lastmod>
 		<image:image>
-			<image:loc>/wp-content/uploads/2023/11/lineboard-scaled.jpg</image:loc>
+			<image:loc>https://safety.co.id/wp-content/uploads/2023/11/lineboard-scaled.jpg</image:loc>
 		</image:image>
 		<image:image>
-			<image:loc>/wp-content/uploads/2023/11/lineboard-scaled.jpg</image:loc>
+			<image:loc>https://safety.co.id/wp-content/uploads/2023/11/lineboard-scaled.jpg</image:loc>
 		</image:image>
 	</url>
 	<url>
-		<loc>/gas-detector</loc>
+		<loc>https://safety.co.id/gas-detector</loc>
 		<lastmod>2023-12-13T10:34:20+00:00</lastmod>
 		<image:image>
-			<image:loc>/wp-content/uploads/2023/11/lineboard-scaled.jpg</image:loc>
+			<image:loc>https://safety.co.id/wp-content/uploads/2023/11/lineboard-scaled.jpg</image:loc>
 		</image:image>
 		<image:image>
-			<image:loc>/wp-content/uploads/2023/11/lineboard-scaled.jpg</image:loc>
+			<image:loc>https://safety.co.id/wp-content/uploads/2023/11/lineboard-scaled.jpg</image:loc>
 		</image:image>
 	</url>
 	<url>
-		<loc>/fire-protection</loc>
+		<loc>https://safety.co.id/fire-protection</loc>
 		<lastmod>2023-12-13T10:32:31+00:00</lastmod>
 		<image:image>
-			<image:loc>/wp-content/uploads/2023/11/lineboard-scaled.jpg</image:loc>
+			<image:loc>https://safety.co.id/wp-content/uploads/2023/11/lineboard-scaled.jpg</image:loc>
 		</image:image>
 		<image:image>
-			<image:loc>/wp-content/uploads/2023/11/lineboard-scaled.jpg</image:loc>
+			<image:loc>https://safety.co.id/wp-content/uploads/2023/11/lineboard-scaled.jpg</image:loc>
 		</image:image>
 	</url>
 	<url>
-		<loc>/fall-protection</loc>
+		<loc>https://safety.co.id/fall-protection</loc>
 		<lastmod>2023-12-13T10:30:11+00:00</lastmod>
 		<image:image>
-			<image:loc>/wp-content/uploads/2023/11/lineboard-scaled.jpg</image:loc>
+			<image:loc>https://safety.co.id/wp-content/uploads/2023/11/lineboard-scaled.jpg</image:loc>
 		</image:image>
 		<image:image>
-			<image:loc>/wp-content/uploads/2023/11/lineboard-scaled.jpg</image:loc>
+			<image:loc>https://safety.co.id/wp-content/uploads/2023/11/lineboard-scaled.jpg</image:loc>
 		</image:image>
 	</url>
 	<url>
-		<loc>/face-protection</loc>
+		<loc>https://safety.co.id/face-protection</loc>
 		<lastmod>2023-12-13T07:06:37+00:00</lastmod>
 		<image:image>
-			<image:loc>/wp-content/uploads/2023/11/lineboard-scaled.jpg</image:loc>
+			<image:loc>https://safety.co.id/wp-content/uploads/2023/11/lineboard-scaled.jpg</image:loc>
 		</image:image>
 		<image:image>
-			<image:loc>/wp-content/uploads/2023/11/lineboard-scaled.jpg</image:loc>
+			<image:loc>https://safety.co.id/wp-content/uploads/2023/11/lineboard-scaled.jpg</image:loc>
 		</image:image>
 	</url>
 	<url>
-		<loc>/eye-protection</loc>
+		<loc>https://safety.co.id/eye-protection</loc>
 		<lastmod>2023-12-13T07:04:49+00:00</lastmod>
 		<image:image>
-			<image:loc>/wp-content/uploads/2023/11/lineboard-scaled.jpg</image:loc>
+			<image:loc>https://safety.co.id/wp-content/uploads/2023/11/lineboard-scaled.jpg</image:loc>
 		</image:image>
 		<image:image>
-			<image:loc>/wp-content/uploads/2023/11/lineboard-scaled.jpg</image:loc>
+			<image:loc>https://safety.co.id/wp-content/uploads/2023/11/lineboard-scaled.jpg</image:loc>
 		</image:image>
 	</url>
 	<url>
-		<loc>/shop</loc>
+		<loc>https://safety.co.id/shop</loc>
 		<lastmod>2023-11-25T11:16:33+00:00</lastmod>
 	</url>
 	<url>
-		<loc>/cart</loc>
+		<loc>https://safety.co.id/cart</loc>
 		<lastmod>2023-11-25T11:16:33+00:00</lastmod>
 		<image:image>
-			<image:loc>/wp-content/uploads/2023/12/KA91-Full-Body-Harness-300x300.jpg</image:loc>
+			<image:loc>https://safety.co.id/wp-content/uploads/2023/12/KA91-Full-Body-Harness-300x300.jpg</image:loc>
 		</image:image>
 		<image:image>
-			<image:loc>/wp-content/uploads/2023/12/KA91H-Full-Body-Harness-300x300.jpg</image:loc>
+			<image:loc>https://safety.co.id/wp-content/uploads/2023/12/KA91H-Full-Body-Harness-300x300.jpg</image:loc>
 		</image:image>
 		<image:image>
-			<image:loc>/wp-content/uploads/2023/12/NP727-Safety-Belt-300x300.jpg</image:loc>
+			<image:loc>https://safety.co.id/wp-content/uploads/2023/12/NP727-Safety-Belt-300x300.jpg</image:loc>
 		</image:image>
 		<image:image>
-			<image:loc>/wp-content/uploads/2023/12/NP737-Safety-Belt-300x300.jpg</image:loc>
+			<image:loc>https://safety.co.id/wp-content/uploads/2023/12/NP737-Safety-Belt-300x300.jpg</image:loc>
 		</image:image>
 	</url>
 	<url>
-		<loc>/checkout</loc>
+		<loc>https://safety.co.id/checkout</loc>
 		<lastmod>2023-11-25T11:16:33+00:00</lastmod>
 	</url>
 	<url>
-		<loc>/my-account</loc>
+		<loc>https://safety.co.id/my-account</loc>
 		<lastmod>2023-11-25T11:16:33+00:00</lastmod>
 	</url>
 	<url>
-		<loc>/kontak-kami</loc>
+		<loc>https://safety.co.id/kontak-kami</loc>
 		<lastmod>2023-11-23T13:24:31+00:00</lastmod>
 	</url>
 	<url>
-		<loc>/tentang-kami</loc>
+		<loc>https://safety.co.id/tentang-kami</loc>
 		<lastmod>2023-11-23T13:15:39+00:00</lastmod>
 		<image:image>
-			<image:loc>/wp-content/uploads/2023/11/safety-stuff-1.png</image:loc>
+			<image:loc>https://safety.co.id/wp-content/uploads/2023/11/safety-stuff-1.png</image:loc>
 		</image:image>
 		<image:image>
-			<image:loc>/wp-content/uploads/2023/11/pekerja-konstruksi.jpg</image:loc>
+			<image:loc>https://safety.co.id/wp-content/uploads/2023/11/pekerja-konstruksi.jpg</image:loc>
 		</image:image>
 	</url>
 </urlset>
