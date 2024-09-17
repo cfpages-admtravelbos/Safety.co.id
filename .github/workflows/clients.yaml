@@ -1,4 +1,4 @@
-name: Update Clients v.2
+name: Update Clients v.3
 
 on:
   push:
@@ -61,6 +61,13 @@ jobs:
             fi
           done
 
+          # Output for debugging purposes
+          echo "Extracted values:"
+          echo "WAURL=${WAURL}"
+          echo "PHURL=${PHURL}"
+          echo "NAME=${NAME}"
+          echo "PHONE=${PHONE}"
+      
           # Output variables
           echo "WAURL=$WAURL" >> $GITHUB_ENV
           echo "PHURL=$PHURL" >> $GITHUB_ENV
@@ -72,28 +79,29 @@ jobs:
         run: |
           # Use the variables set previously from GITHUB_ENV
           for file in $(find . -name '*.html'); do
-            # Use alternate delimiters '@' to avoid issues with slashes
+            # Update the href for WhatsApp
             if [ -n "${WAURL}" ]; then
-              # Update the href for WhatsApp
-              sed -i -E "s@(<div class=\"whatsapp-floating\"[^>]*<a href=\")[^\"]+@\1${WAURL}@" "$file"
+              sed -i -E "s@(class=\"whatsapp-floating\"[^>]*href=\")[^\"]+@\1${WAURL}@" "$file"
             fi
-            
+      
+            # Update the href for phone
             if [ -n "${PHURL}" ]; then
-              # Update the href for phone
-              sed -i -E "s@(<div class=\"tlp-floating\"[^>]*<a href=\")[^\"]+@\1${PHURL}@" "$file"
+              sed -i -E "s@(class=\"tlp-floating\"[^>]*href=\")[^\"]+@\1${PHURL}@" "$file"
             fi
-
-            # Update the span text
-            sed -i -E "s@(<div class=\"(whatsapp|tlp)-floating\"[^>]*><a[^>]*><span[^>]*>)[^<]+(<)@\1${PHONE} (${NAME})\3@" "$file"
+      
+            # Update the phone number and name
+            if [ -n "${PHONE}" ] && [ -n "${NAME}" ]; then
+              sed -i -E "s@(<span[^>]*>)[^<]+(<\/span>)@\1${PHONE} (${NAME})\2@" "$file"
+            fi
           done
-
+      
           # Commit and push changes if any
           git config --global user.name 'github-actions[bot]'
           git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
           if ! git diff --quiet; then
             git add .
             git commit -m "Update URLs: WAURL: ${WAURL}, PHURL: ${PHURL}, Phone: ${PHONE}, Name: ${NAME}"
-            
+      
             # Push changes
             git remote set-url origin https://x-access-token:${{ secrets.GH_PAT }}@github.com/${{ github.repository }}
             git push origin HEAD:main
