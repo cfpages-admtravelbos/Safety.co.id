@@ -72,14 +72,21 @@ jobs:
         run: |
           # Use the variables set previously from GITHUB_ENV
           for file in $(find . -name '*.html'); do
-            # Update the href attribute URL for WhatsApp
-            sed -i -E "s|(class=\"whatsapp-floating\"[^>]*<a href=\")[^\"]+|\\1${WAURL}|" "$file"
+            # Check that URL variables are not empty
+            if [ -n "${WAURL}" ]; then
+              # Update the href attribute URL for WhatsApp
+              sed -i -E "s|(class=\"whatsapp-floating\"[^>]*<a href=\")[^\"]*|\\1${WAURL}|" "$file"
+            fi
+            
+            if [ -n "${PHURL}" ]; then
+              # Update the href attribute URL for phone
+              sed -i -E "s|(class=\"tlp-floating\"[^>]*<a href=\")[^\"]*|\\1${PHURL}|" "$file"
+            fi
 
-            # Update the href attribute URL for phone
-            sed -i -E "s|(class=\"tlp-floating\"[^>]*<a href=\")[^\"]+|\\1${PHURL}|" "$file"
-
-            # Update the span text with phone number and name
-            sed -i -E "s|(<div class=\"(whatsapp|tlp)-floating\"[^>]*><a[^>]*><span[^>]*>)[^<]+(<)|\\1${PHONE} (${NAME})\\3|" "$file"
+            # Update the span text with phone number and name, carefully escaping special characters
+            escaped_phone=$(printf '%s\n' "$PHONE" | sed 's:[\/&]:\\&:g')
+            escaped_name=$(printf '%s\n' "$NAME" | sed 's:[\/&]:\\&:g')
+            sed -i -E "s|(<div class=\"(whatsapp|tlp)-floating\"[^>]*><a[^>]*><span[^>]*>)[^<]+(<)|\\1${escaped_phone} (${escaped_name})\\3|" "$file"
           done
 
           # Commit and push changes if any
