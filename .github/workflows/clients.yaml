@@ -1,4 +1,4 @@
-name: Update HTML with WhatsApp and Phone Information
+name: Update Clients v.1
 
 on:
   push:
@@ -31,7 +31,7 @@ jobs:
             echo "File is empty, nothing to do." && exit 0
           fi
 
-      - name: Determine WAURL, PHURL, NAME, and PHONE from .clients
+      - name: Determine variable from .clients
         if: env.exists == 'true'
         run: |
           # Read the .clients file content
@@ -43,10 +43,10 @@ jobs:
           NAME=""
           PHONE=""
 
-          # Split the line into parts using the delimiter '|'
+          # Split using '|'
           IFS='|' read -ra PARTS <<< "$LINE"
 
-          # Identify each part based on format
+          # Identify each
           for PART in "${PARTS[@]}"; do
             if [[ $PART == https://* ]]; then
               if [[ $PART == *💬* ]]; then
@@ -61,32 +61,38 @@ jobs:
             fi
           done
 
-          # Output identified variables
+          # Output variables
           echo "WAURL=$WAURL" >> $GITHUB_ENV
           echo "PHURL=$PHURL" >> $GITHUB_ENV
           echo "NAME=$NAME" >> $GITHUB_ENV
           echo "PHONE=$PHONE" >> $GITHUB_ENV
 
-      - name: Update HTML with WAURL and PHURL
+      - name: Update Clients
         if: env.exists == 'true'
         run: |
-          # Use the variables set previously from GITHUB_ENV
+          # Use the variables from GITHUB_ENV
           for file in $(find . -name '*.html'); do
-            # Check that URL variables are not empty
-            if [ -n "${WAURL}" ]; then
-              # Update the href attribute URL for WhatsApp
-              sed -i -E "s|(class=\"whatsapp-floating\"[^>]*<a href=\")[^\"]*|\\1${WAURL}|" "$file"
+            # Avoid sed parsing issues 
+            escaped_waurl=$(printf '%s\n' "$WAURL" | sed 's:[\\&]:\\&:g')
+            escaped_phurl=$(printf '%s\n' "$PHURL" | sed 's:[\\&]:\\&:g')
+
+            # Ensure WAURL and PHURL are not empty
+            if [ -n "$escaped_waurl" ]; then
+              # Update the href for WhatsApp
+              sed -i -E "s|(class=\"whatsapp-floating\"[^>]*<a href=\")[^\"]*|\1${escaped_waurl}|" "$file"
             fi
             
-            if [ -n "${PHURL}" ]; then
-              # Update the href attribute URL for phone
-              sed -i -E "s|(class=\"tlp-floating\"[^>]*<a href=\")[^\"]*|\\1${PHURL}|" "$file"
+            if [ -n "$escaped_phurl" ]; then
+              # Update the href for phone
+              sed -i -E "s|(class=\"tlp-floating\"[^>]*<a href=\")[^\"]*|\1${escaped_phurl}|" "$file"
             fi
 
-            # Update the span text with phone number and name, carefully escaping special characters
-            escaped_phone=$(printf '%s\n' "$PHONE" | sed 's:[\/&]:\\&:g')
-            escaped_name=$(printf '%s\n' "$NAME" | sed 's:[\/&]:\\&:g')
-            sed -i -E "s|(<div class=\"(whatsapp|tlp)-floating\"[^>]*><a[^>]*><span[^>]*>)[^<]+(<)|\\1${escaped_phone} (${escaped_name})\\3|" "$file"
+            # Escape any special characters within NAME and PHONE
+            escaped_phone=$(printf '%s\n' "$PHONE" | sed 's:[\\/&]:\\&:g')
+            escaped_name=$(printf '%s\n' "$NAME" | sed 's:[\\/&]:\\&:g')
+
+            # Update the span text
+            sed -i -E "s|(<div class=\"(whatsapp|tlp)-floating\"[^>]*><a[^>]*><span[^>]*>)[^<]+(<)|\1${escaped_phone} (${escaped_name})\3|" "$file"
           done
 
           # Commit and push changes if any
