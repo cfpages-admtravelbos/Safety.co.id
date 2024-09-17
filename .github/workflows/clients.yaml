@@ -1,4 +1,4 @@
-name: Update Clients v.2
+name: Update Clients v.3
 
 on:
   push:
@@ -72,19 +72,19 @@ jobs:
         run: |
           # Use the variables set previously from GITHUB_ENV
           for file in $(find . -name '*.html'); do
-            # Use alternate delimiters '@' to avoid issues with slashes
+            # Use '|' as delimiters
             if [ -n "${WAURL}" ]; then
               # Update the href for WhatsApp
-              sed -i -E "s@(<div class=\"whatsapp-floating\"[^>]*<a href=\")[^\"]+@\1${WAURL}@" "$file"
+              sed -i -E "s|(<div class=\"whatsapp-floating\"[^>]*<a href=\")[^\"]+|\1${WAURL}|" "$file"
             fi
-            
+
             if [ -n "${PHURL}" ]; then
               # Update the href for phone
-              sed -i -E "s@(<div class=\"tlp-floating\"[^>]*<a href=\")[^\"]+@\1${PHURL}@" "$file"
+              sed -i -E "s|(<div class=\"tlp-floating\"[^>]*<a href=\")[^\"]+|\1${PHURL}|" "$file"
             fi
 
             # Update the span text
-            sed -i -E "s@(<div class=\"(whatsapp|tlp)-floating\"[^>]*><a[^>]*><span[^>]*>)[^<]+(<)@\1${PHONE} (${NAME})\3@" "$file"
+            sed -i -E "s|(<div class=\"(whatsapp|tlp)-floating\"[^>]*><a[^>]*><span[^>]*>)[^<]+(<)|\1${PHONE} (${NAME})\3|" "$file"
           done
 
           # Commit and push changes if any
@@ -94,8 +94,8 @@ jobs:
             git add .
             git commit -m "Update URLs: WAURL: ${WAURL}, PHURL: ${PHURL}, Phone: ${PHONE}, Name: ${NAME}"
             
-            # Push changes
-            git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+            # Push changes using GH_PAT
+            git remote set-url origin https://x-access-token:${{ secrets.GH_PAT }}@github.com/${{ github.repository }}
             git push origin HEAD:main
           else
             echo "No changes to commit."
