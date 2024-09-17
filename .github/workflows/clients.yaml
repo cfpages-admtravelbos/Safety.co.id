@@ -1,4 +1,4 @@
-name: Update Clients v.4
+name: Update Clients v.5
 
 on:
   push:
@@ -74,6 +74,29 @@ jobs:
           echo "NAME=$NAME" >> $GITHUB_ENV
           echo "PHONE=$PHONE" >> $GITHUB_ENV
 
+      - name: Debug: List of unique phrases matching regex
+        if: env.exists == 'true'
+        run: |
+          echo "Checking span and href matches:"
+          for file in $(find . -name '*.html'); do
+            echo "Processing $file"
+
+            # Print unique WhatsApp href matches
+            grep -oP '(class="whatsapp-floating"[^>]*href=")[^"]*' "$file" | sort | uniq | while read -r match; do
+              echo "WhatsApp href match: $match"
+            done
+            
+            # Print unique phone/href matches
+            grep -oP '(class="tlp-floating"[^>]*href=")[^"]*' "$file" | sort | uniq | while read -r match; do
+              echo "Phone href match: $match"
+            done
+            
+            # Print unique span text matches
+            grep -oP '(<span[^>]*>)\d{4} \d{4}( \d{4})? \([^\)]+\)(</span>)' "$file" | sort | uniq | while read -r match; do
+              echo "Span text match: $match"
+            done
+          done
+
       - name: Update Clients
         if: env.exists == 'true'
         run: |
@@ -91,7 +114,7 @@ jobs:
       
             # Update span text where the text format matches number (Name)
             if [ -n "${PHONE}" ] && [ -n "${NAME}" ]; then
-              sed -i -E "s@(<span[^>]*>)\d{4} \d{4} \d{4} \(\w+\)(</span>)@\1${PHONE} (${NAME})\2@" "$file"
+              sed -i -E "s@(<span[^>]*>)\d{4} \d{4}( \d{4})? \([^\)]+\)(</span>)@\1${PHONE} (${NAME})\2@" "$file"
             fi
           done
       
