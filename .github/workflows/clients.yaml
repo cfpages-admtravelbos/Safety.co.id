@@ -24,6 +24,13 @@ jobs:
         if: env.exists == 'false'
         run: echo "No .clients file found, aborting operation." && exit 1
 
+      - name: Check if .clients file is empty
+        if: env.exists == 'true'
+        run: |
+          if [[ ! -s .clients ]]; then
+            echo "File is empty, nothing to do." && exit 0
+          fi
+
       - name: Determine WAURL, PHURL, NAME, and PHONE from .clients
         if: env.exists == 'true'
         run: |
