@@ -1,4 +1,4 @@
-name: Update Clients v.6
+name: Update Clients v.7
 
 on:
   push:
@@ -49,9 +49,9 @@ jobs:
           # Identify each
           for PART in "${PARTS[@]}"; do
             if [[ $PART == https://* ]]; then
-              if [[ $PART == *💬* ]]; then
+              if [[ $PART == *:speech_balloon:* ]]; then
                 WAURL=$PART
-              elif [[ $PART == *📞* ]]; then
+              elif [[ $PART == *:telephone_receiver:* ]]; then
                 PHURL=$PART
               fi
             elif [[ $PART =~ ^[0-9\ ]+$ ]]; then
@@ -74,58 +74,31 @@ jobs:
           echo "NAME=$NAME" >> $GITHUB_ENV
           echo "PHONE=$PHONE" >> $GITHUB_ENV
 
-      - name: Debug List of unique phrases matching regex
-        if: env.exists == 'true'
-        run: |
-          echo "Checking span and href matches:"
-          for file in $(find . -name '*.html'); do
-            echo "Processing $file"
-
-            # Print unique WhatsApp href matches
-            grep -oP '(class="whatsapp-floating"[^>]*href=")[^"]*' "$file" | sort | uniq | while read -r match; do
-              echo "WhatsApp href match: $match"
-            done
-            
-            # Print unique phone/href matches
-            grep -oP '(class="tlp-floating"[^>]*href=")[^"]*' "$file" | sort | uniq | while read -r match; do
-              echo "Phone href match: $match"
-            done
-            
-            # Print unique span text matches
-            grep -oP '(<span[^>]*>)\d{4} \d{4}( \d{4})? \([^\)]+\)(</span>)' "$file" | sort | uniq | while read -r match; do
-              echo "Span text match: $match"
-            done
-          done
-
       - name: Update Clients
         if: env.exists == 'true'
         run: |
           # Use the variables set previously from GITHUB_ENV
           for file in $(find . -name '*.html'); do
             echo "Processing $file"
-            
+
             # Backup the file for comparison
             cp "$file" "${file}.bak"
 
-            # Update the href for WhatsApp links
-            if [ -n "${WAURL}" ]; then
-              sed -i -E "s@(class=\"whatsapp-floating\"[^>]*href=\")[^\"]*(https?://(what\.sapp|klik)[^💬]*💬[^\"]*)\"@\1${WAURL}\"@" "$file"
-            fi
-      
-            # Update the href for phone links
-            if [ -n "${PHURL}" ]; then
-              sed -i -E "s@(class=\"tlp-floating\"[^>]*href=\")[^\"]*(https?://(con\.tact|klik)[^📞]*📞[^\"]*)\"@\1${PHURL}\"@" "$file"
-            fi
-      
-            # Update span text where the text format matches number (Name)
+            # Update the phone number and name in span
             if [ -n "${PHONE}" ] && [ -n "${NAME}" ]; then
+              echo "Attempting to replace span text in: $file"
+              echo "Sed Command: sed -i -E 's@(<span[^>]*>)\\d{4} \\d{4}( \\d{4})? \\([^)]+\\)(</span>)@\\1${PHONE} (${NAME})\\2@' \"$file\""
+
+              # Execute the sed command for replacement
               sed -i -E "s@(<span[^>]*>)\d{4} \d{4}( \d{4})? \([^\)]+\)(</span>)@\1${PHONE} (${NAME})\2@" "$file"
-            fi
-            
-            # Compare files and print differences
-            if ! diff -q "${file}.bak" "$file"; then
-              echo "Changes detected in $file:"
-              diff "${file}.bak" "$file"
+
+              # Show the result for change
+              if ! diff -q "${file}.bak" "$file"; then
+                echo "Changes detected in $file:"
+                diff "${file}.bak" "$file"
+              else
+                echo "No changes detected in the content of $file after sed."
+              fi
             fi
           done
       
