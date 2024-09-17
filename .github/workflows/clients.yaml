@@ -1,4 +1,4 @@
-name: Update Clients v.1
+name: Update Clients v.2
 
 on:
   push:
@@ -70,29 +70,21 @@ jobs:
       - name: Update Clients
         if: env.exists == 'true'
         run: |
-          # Use the variables from GITHUB_ENV
+          # Use the variables set previously from GITHUB_ENV
           for file in $(find . -name '*.html'); do
-            # Avoid sed parsing issues 
-            escaped_waurl=$(printf '%s\n' "$WAURL" | sed 's:[\\&]:\\&:g')
-            escaped_phurl=$(printf '%s\n' "$PHURL" | sed 's:[\\&]:\\&:g')
-
-            # Ensure WAURL and PHURL are not empty
-            if [ -n "$escaped_waurl" ]; then
+            # Use alternate delimiters '@' to avoid issues with slashes
+            if [ -n "${WAURL}" ]; then
               # Update the href for WhatsApp
-              sed -i -E "s|(class=\"whatsapp-floating\"[^>]*<a href=\")[^\"]*|\1${escaped_waurl}|" "$file"
+              sed -i -E "s@(<div class=\"whatsapp-floating\"[^>]*<a href=\")[^\"]+@\1${WAURL}@" "$file"
             fi
             
-            if [ -n "$escaped_phurl" ]; then
+            if [ -n "${PHURL}" ]; then
               # Update the href for phone
-              sed -i -E "s|(class=\"tlp-floating\"[^>]*<a href=\")[^\"]*|\1${escaped_phurl}|" "$file"
+              sed -i -E "s@(<div class=\"tlp-floating\"[^>]*<a href=\")[^\"]+@\1${PHURL}@" "$file"
             fi
 
-            # Escape any special characters within NAME and PHONE
-            escaped_phone=$(printf '%s\n' "$PHONE" | sed 's:[\\/&]:\\&:g')
-            escaped_name=$(printf '%s\n' "$NAME" | sed 's:[\\/&]:\\&:g')
-
             # Update the span text
-            sed -i -E "s|(<div class=\"(whatsapp|tlp)-floating\"[^>]*><a[^>]*><span[^>]*>)[^<]+(<)|\1${escaped_phone} (${escaped_name})\3|" "$file"
+            sed -i -E "s@(<div class=\"(whatsapp|tlp)-floating\"[^>]*><a[^>]*><span[^>]*>)[^<]+(<)@\1${PHONE} (${NAME})\3@" "$file"
           done
 
           # Commit and push changes if any
