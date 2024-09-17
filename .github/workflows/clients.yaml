@@ -1,13 +1,13 @@
-name: Update Clients v.7
+name: Update Clients v.8
 
 on:
   push:
     paths:
-      - .clients  # Trigger when the .clients file is modified
-  workflow_dispatch:  # Allow manual triggering of the workflow
+      - .clients
+  workflow_dispatch:
 
 permissions:
-  contents: write  # Grant write permissions to the repository contents
+  contents: write
 
 jobs:
   update_html_files:
@@ -34,41 +34,19 @@ jobs:
       - name: Determine variable from .clients
         if: env.exists == 'true'
         run: |
-          # Read the .clients file content
           LINE=$(cat .clients)
-
-          # Initialize variables
-          WAURL=""
-          PHURL=""
-          NAME=""
-          PHONE=""
-
-          # Split using '|'
+          WAURL="" PHURL="" NAME="" PHONE=""
           IFS='|' read -ra PARTS <<< "$LINE"
-
-          # Identify each
           for PART in "${PARTS[@]}"; do
             if [[ $PART == https://* ]]; then
-              if [[ $PART == *:speech_balloon:* ]]; then
-                WAURL=$PART
-              elif [[ $PART == *:telephone_receiver:* ]]; then
-                PHURL=$PART
-              fi
+              [[ $PART == *:speech_balloon:* ]] && WAURL=$PART || PHURL=$PART
             elif [[ $PART =~ ^[0-9\ ]+$ ]]; then
               PHONE=$PART
             else
               NAME=$PART
             fi
           done
-
-          # Output for debugging purposes
-          echo "Extracted values:"
-          echo "WAURL=${WAURL}"
-          echo "PHURL=${PHURL}"
-          echo "NAME=${NAME}"
-          echo "PHONE=${PHONE}"
-      
-          # Output variables
+          echo "Extracted values: WAURL=${WAURL}, PHURL=${PHURL}, NAME=${NAME}, PHONE=${PHONE}"
           echo "WAURL=$WAURL" >> $GITHUB_ENV
           echo "PHURL=$PHURL" >> $GITHUB_ENV
           echo "NAME=$NAME" >> $GITHUB_ENV
@@ -77,39 +55,30 @@ jobs:
       - name: Update Clients
         if: env.exists == 'true'
         run: |
-          # Use the variables set previously from GITHUB_ENV
           for file in $(find . -name '*.html'); do
             echo "Processing $file"
-
-            # Backup the file for comparison
             cp "$file" "${file}.bak"
+            echo "Current spans in $file:"
+            grep -A 2 -B 2 '<span' "$file"
 
-            # Update the phone number and name in span
-            if [ -n "${PHONE}" ] && [ -n "${NAME}" ]; then
-              echo "Attempting to replace span text in: $file"
-              echo "Sed Command: sed -i -E 's@(<span[^>]*>)\\d{4} \\d{4}( \\d{4})? \\([^)]+\\)(</span>)@\\1${PHONE} (${NAME})\\2@' \"$file\""
+            echo "Attempting to replace span text in: $file"
+            sed -i -E "s@(<span[^>]*>)\s*\d{1,4} \d{1,4}( \d{1,4})? *\([^\)]+\)\s*(</span>)@\1${PHONE} (${NAME})\4@" "$file"
 
-              # Execute the sed command for replacement
-              sed -i -E "s@(<span[^>]*>)\d{4} \d{4}( \d{4})? \([^\)]+\)(</span>)@\1${PHONE} (${NAME})\2@" "$file"
-
-              # Show the result for change
-              if ! diff -q "${file}.bak" "$file"; then
-                echo "Changes detected in $file:"
-                diff "${file}.bak" "$file"
-              else
-                echo "No changes detected in the content of $file after sed."
-              fi
+            if ! diff -q "${file}.bak" "$file"; then
+              echo "Changes detected in $file:"
+              diff "${file}.bak" "$file"
+            else
+              echo "No changes detected in the content of $file after sed."
             fi
           done
       
-          # Verify changes and commit if necessary
           git config --global user.name 'github-actions[bot]'
           git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git diff --name-only
           if ! git diff --quiet; then
             git add .
             git commit -m "Update URLs: WAURL: ${WAURL}, PHURL: ${PHURL}, Phone: ${PHONE}, Name: ${NAME}"
-      
+            
             # Push changes
             git remote set-url origin https://x-access-token:${{ secrets.GH_PAT }}@github.com/${{ github.repository }}
             git push origin HEAD:main
