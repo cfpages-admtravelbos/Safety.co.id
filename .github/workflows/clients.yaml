@@ -1,13 +1,13 @@
-name: Update Clients v.8
+name: Update Clients v.9
 
 on:
   push:
     paths:
-      - .clients
-  workflow_dispatch:
+      - .clients  # Trigger when the .clients file is modified
+  workflow_dispatch:  # Allow manual triggering of the workflow
 
 permissions:
-  contents: write
+  contents: write  # Grant write permissions to the repository contents
 
 jobs:
   update_html_files:
@@ -35,50 +35,73 @@ jobs:
         if: env.exists == 'true'
         run: |
           LINE=$(cat .clients)
-          WAURL="" PHURL="" NAME="" PHONE=""
+
+          WAURL=""
+          PHURL=""
+          NAME=""
+          PHONE=""
+
           IFS='|' read -ra PARTS <<< "$LINE"
+
           for PART in "${PARTS[@]}"; do
             if [[ $PART == https://* ]]; then
-              [[ $PART == *:speech_balloon:* ]] && WAURL=$PART || PHURL=$PART
+              if [[ $PART == *:speech_balloon:* ]]; then
+                WAURL=$PART
+              elif [[ $PART == *:telephone_receiver:* ]]; then
+                PHURL=$PART
+              fi
             elif [[ $PART =~ ^[0-9\ ]+$ ]]; then
               PHONE=$PART
             else
               NAME=$PART
             fi
           done
-          echo "Extracted values: WAURL=${WAURL}, PHURL=${PHURL}, NAME=${NAME}, PHONE=${PHONE}"
+
           echo "WAURL=$WAURL" >> $GITHUB_ENV
           echo "PHURL=$PHURL" >> $GITHUB_ENV
           echo "NAME=$NAME" >> $GITHUB_ENV
           echo "PHONE=$PHONE" >> $GITHUB_ENV
 
-      - name: Update Clients
+      - name: Debug and Replace HTML Content
         if: env.exists == 'true'
         run: |
           for file in $(find . -name '*.html'); do
             echo "Processing $file"
-            cp "$file" "${file}.bak"
-            echo "Current spans in $file:"
-            grep -A 2 -B 2 '<span' "$file"
 
-            echo "Attempting to replace span text in: $file"
-            sed -i -E "s@(<span[^>]*>)\s*\d{1,4} \d{1,4}( \d{1,4})? *\([^\)]+\)\s*(</span>)@\1${PHONE} (${NAME})\4@" "$file"
+            # Remove this if no backup is needed
+            cp "$file" "${file}.bak"
+
+            grep -oP '(class="whatsapp-floating"[^>]*href=")[^"]*' "$file" | while read -r match; do
+              echo "WhatsApp href match: $match"
+              original_url=${match#*href=\"}
+              sed -i "s@${original_url}@${WAURL}@" "$file"
+            done
+
+            grep -oP '(class="tlp-floating"[^>]*href=")[^"]*' "$file" | while read -r match; do
+              echo "Phone href match: $match"
+              original_url=${match#*href=\"}
+              sed -i "s@${original_url}@${PHURL}@" "$file"
+            done
+
+            grep -oP '(<span[^>]*>)\d{4} \d{4}( \d{4})? \([^\)]+\)(</span>)' "$file" | while read -r match; do
+              echo "Span text match: $match"
+              sed -i "s@${match}@<span>${PHONE} (${NAME})</span>@" "$file"
+            done
 
             if ! diff -q "${file}.bak" "$file"; then
               echo "Changes detected in $file:"
               diff "${file}.bak" "$file"
-            else
-              echo "No changes detected in the content of $file after sed."
             fi
           done
-      
+
+          # Verify changes and commit if necessary
           git config --global user.name 'github-actions[bot]'
           git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git diff --name-only
           if ! git diff --quiet; then
             git add .
             git commit -m "Update URLs: WAURL: ${WAURL}, PHURL: ${PHURL}, Phone: ${PHONE}, Name: ${NAME}"
-            
+      
             # Push changes
             git remote set-url origin https://x-access-token:${{ secrets.GH_PAT }}@github.com/${{ github.repository }}
             git push origin HEAD:main
