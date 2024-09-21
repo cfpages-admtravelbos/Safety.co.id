@@ -1,13 +1,13 @@
-name: Update Clients v.5.5
+name: Update Multiple Clients v.6.5
 
 on:
   push:
     paths:
-      - .clients  # Trigger when the .clients file is modified
-  workflow_dispatch:  # Allow manual triggering of the workflow
+      - .clients
+  workflow_dispatch:
 
 permissions:
-  contents: write  # Grant write permissions to the repository contents
+  contents: write
 
 jobs:
   update_html_files:
@@ -31,86 +31,142 @@ jobs:
             echo "File is empty, nothing to do." && exit 0
           fi
 
-      - name: Determine variable from .clients
-        if: env.exists == 'true'
-        run: |
-          # Read the .clients file content
-          LINE=$(cat .clients)
+      - name: Process clients
+              if: env.exists == 'true'
+              run: |
+                # Function to escape special characters for sed
+                escape_for_sed() {
+                  echo "$1" | sed -e 's/[\/&]/\\&/g'
+                }
 
-          # Initialize variables
-          WAURL=""
-          PHURL=""
-          NAME=""
-          PHONE=""
+                # Function to create grep pattern from filter
+                create_grep_pattern() {
+                  local filter="$1"
+                  # Remove all spaces from the filter
+                  filter="${filter// /}"
+                  local pattern=""
+                  
+                  # Check if the filter contains ':'
+                  if [[ "$filter" == *:* ]]; then
+                    # Complex filter
+                    IFS=';' read -ra FILTER_PARTS <<< "$filter"
+                    for part in "${FILTER_PARTS[@]}"; do
+                      IFS=':' read -r category cities <<< "$part"
+                      IFS=',' read -ra CITIES <<< "$cities"
+                      for city in "${CITIES[@]}"; do
+                        [ -n "$pattern" ] && pattern+="\\|"
+                        pattern+="($category.*$city\\|$city.*$category)"
+                      done
+                    done
+                  else
+                    # Simple filter
+                    IFS=',' read -ra FILTER_PARTS <<< "$filter"
+                    for part in "${FILTER_PARTS[@]}"; do
+                      [ -n "$pattern" ] && pattern+="\\|"
+                      pattern+="$part"
+                    done
+                  fi
+                  
+                  echo "$pattern"
+                }
 
-          # Split using '|'
-          IFS='|' read -ra PARTS <<< "$LINE"
+                # Function to process a single client
+                process_client() {
+                  local LINE="$1"
+                  local CLIENT_NUM="$2"
 
-          # Identify each
-          for PART in "${PARTS[@]}"; do
-            if [[ $PART == https://* ]]; then
-              if [[ $PART == *💬* ]]; then
-                WAURL=$PART
-              elif [[ $PART == *📞* ]]; then
-                PHURL=$PART
-              fi
-            elif [[ $PART =~ ^[0-9\ ]+$ ]]; then
-              PHONE=$PART
-            else
-              NAME=$PART
-            fi
-          done
+                  # Initialize variables
+                  WAURL=""
+                  PHURL=""
+                  NAME=""
+                  PHONE=""
+                  FILTER=""
 
-          # Output variables
-          echo "WAURL=$WAURL" >> $GITHUB_ENV
-          echo "PHURL=$PHURL" >> $GITHUB_ENV
-          echo "NAME=$NAME" >> $GITHUB_ENV
-          echo "PHONE=$PHONE" >> $GITHUB_ENV
+                  # Split using '|' and trim spaces
+                  IFS='|' read -ra PARTS <<< "$LINE"
+                  PARTS=("${PARTS[@]// /}")  # Remove leading/trailing spaces from each part
 
-      - name: Debug extracted variables
-        run: |
-          echo "WAURL: $WAURL"
-          echo "PHURL: $PHURL"
-          echo "NAME: $NAME"
-          echo "PHONE: $PHONE"
+                  # Identify each part
+                  for PART in "${PARTS[@]}"; do
+                    if [[ $PART == https://* ]]; then
+                      if [[ $PART == *💬* ]]; then
+                        WAURL=$PART
+                      elif [[ $PART == *📞* ]]; then
+                        PHURL=$PART
+                      fi
+                    elif [[ $PART =~ ^[0-9[:space:]]+$ ]]; then
+                      PHONE=$PART
+                    elif [[ $PART =~ [A-Z] ]]; then
+                      NAME=$PART
+                    else
+                      FILTER=$PART
+                    fi
+                  done
 
-      - name: Update Clients
-        if: env.exists == 'true'
-        run: |
-          # Function to escape special characters for sed
-          escape_for_sed() {
-            echo "$1" | sed -e 's/[\/&]/\\&/g'
-          }
+                  echo "Processing Client $CLIENT_NUM:"
+                  echo "WAURL: $WAURL"
+                  echo "PHURL: $PHURL"
+                  echo "NAME: $NAME"
+                  echo "PHONE: $PHONE"
+                  echo "FILTER: $FILTER"
 
-          # Store the current values using awk
-          OLD_PHONE_NAME=$(awk -F'[<>]' '/<span[^>]*>[0-9]{4} [0-9]{4}( [0-9]{4})? \([^)]+\)/ {print $3}' $(find . -name "*.html") | head -n1)
-          OLD_WAURL=$(awk -F'"' '/class="whatsapp-floating".*href="/ {for(i=1;i<=NF;i++) if($i~/^https?:/) {print $i; exit}}' $(find . -name "*.html") | head -n1)
-          OLD_PHURL=$(awk -F'"' '/class="tlp-floating".*href="/ {for(i=1;i<=NF;i++) if($i~/^https?:/) {print $i; exit}}' $(find . -name "*.html") | head -n1)
+                  NEW_PHONE_NAME="${PHONE} (${NAME})"
 
-          echo "Old PHONE_NAME: $OLD_PHONE_NAME"
-          echo "Old WAURL: $OLD_WAURL"
-          echo "Old PHURL: $OLD_PHURL"
+                  # Create a grep pattern from FILTER or use all HTML files if FILTER is empty
+                  if [ -n "$FILTER" ]; then
+                    FILTER_PATTERN=$(create_grep_pattern "$FILTER")
+                    echo "Generated FILTER_PATTERN: $FILTER_PATTERN"
+                    FILE_LIST=$(find . -name "*.html" -type f | grep -E "$FILTER_PATTERN")
+                  else
+                    FILE_LIST=$(find . -name "*.html" -type f)
+                  fi
 
-          # Escape special characters
-          OLD_PHONE_NAME_ESCAPED=$(escape_for_sed "$OLD_PHONE_NAME")
-          NEW_PHONE_NAME_ESCAPED=$(escape_for_sed "${PHONE} (${NAME})")
-          OLD_WAURL_ESCAPED=$(escape_for_sed "$OLD_WAURL")
-          NEW_WAURL_ESCAPED=$(escape_for_sed "$WAURL")
-          OLD_PHURL_ESCAPED=$(escape_for_sed "$OLD_PHURL")
-          NEW_PHURL_ESCAPED=$(escape_for_sed "$PHURL")
+                  # Update files
+                  CHANGES_MADE=false
+                  echo "$FILE_LIST" | while read -r file; do
+                    # Extract current values for this file
+                    OLD_PHONE_NAME=$(awk -F'[<>]' '/<span[^>]*>[0-9]{4} [0-9]{4}( [0-9]{4})? \([^)]+\)/ {print $3; exit}' "$file")
+                    OLD_WAURL=$(awk -F'"' '/class="whatsapp-floating".*href="/ {for(i=1;i<=NF;i++) if($i~/^https?:/) {print $i; exit}}' "$file")
+                    OLD_PHURL=$(awk -F'"' '/class="tlp-floating".*href="/ {for(i=1;i<=NF;i++) if($i~/^https?:/) {print $i; exit}}' "$file")
 
-          # Update files
-          find . -name "*.html" -type f | while read -r file; do
-            if [ -n "$OLD_PHONE_NAME" ] && [ -n "$PHONE" ] && [ -n "$NAME" ]; then
-              sed -i "s|$OLD_PHONE_NAME_ESCAPED|$NEW_PHONE_NAME_ESCAPED|g" "$file"
-            fi
-            if [ -n "$OLD_WAURL" ] && [ -n "$WAURL" ]; then
-              sed -i "s|href=\"$OLD_WAURL_ESCAPED\"|href=\"$NEW_WAURL_ESCAPED\"|g" "$file"
-            fi
-            if [ -n "$OLD_PHURL" ] && [ -n "$PHURL" ]; then
-              sed -i "s|href=\"$OLD_PHURL_ESCAPED\"|href=\"$NEW_PHURL_ESCAPED\"|g" "$file"
-            fi
-          done
+                    # Compare and update if different
+                    if [ "$OLD_PHONE_NAME" != "$NEW_PHONE_NAME" ] || [ "$OLD_WAURL" != "$WAURL" ] || [ "$OLD_PHURL" != "$PHURL" ]; then
+                      # Escape special characters
+                      OLD_PHONE_NAME_ESCAPED=$(escape_for_sed "$OLD_PHONE_NAME")
+                      NEW_PHONE_NAME_ESCAPED=$(escape_for_sed "$NEW_PHONE_NAME")
+                      OLD_WAURL_ESCAPED=$(escape_for_sed "$OLD_WAURL")
+                      NEW_WAURL_ESCAPED=$(escape_for_sed "$WAURL")
+                      OLD_PHURL_ESCAPED=$(escape_for_sed "$OLD_PHURL")
+                      NEW_PHURL_ESCAPED=$(escape_for_sed "$PHURL")
+
+                      # Perform replacements
+                      sed -i "s|$OLD_PHONE_NAME_ESCAPED|$NEW_PHONE_NAME_ESCAPED|g" "$file"
+                      sed -i "s|href=\"$OLD_WAURL_ESCAPED\"|href=\"$NEW_WAURL_ESCAPED\"|g" "$file"
+                      sed -i "s|href=\"$OLD_PHURL_ESCAPED\"|href=\"$NEW_PHURL_ESCAPED\"|g" "$file"
+                      
+                      CHANGES_MADE=true
+                      echo "Updated file: $file"
+                    else
+                      echo "No changes needed for file: $file"
+                    fi
+                  done
+
+                  if [ "$CHANGES_MADE" = true ]; then
+                    echo "Changes were made for Client $CLIENT_NUM"
+                  else
+                    echo "No changes were necessary for Client $CLIENT_NUM"
+                  fi
+
+                  echo "Client $CLIENT_NUM processing complete."
+                  echo "----------------------------------------"
+                }
+
+                # Read .clients file line by line
+                CLIENT_NUM=1
+                while IFS= read -r LINE; do
+                  process_client "$LINE" "$CLIENT_NUM"
+                  ((CLIENT_NUM++))
+                done < .clients
 
       - name: Commit and push changes
         run: |
@@ -118,7 +174,7 @@ jobs:
           git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
           if ! git diff --quiet; then
             git add .
-            git commit -m "Update URLs: WAURL: ${WAURL}, PHURL: ${PHURL}, Phone: ${PHONE}, Name: ${NAME}"
+            git commit -m "Update multiple clients' information"
             git remote set-url origin https://x-access-token:${{ secrets.GH_PAT }}@github.com/${{ github.repository }}
             git push origin HEAD:main
           else
