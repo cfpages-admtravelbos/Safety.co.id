@@ -1,4 +1,4 @@
-name: Update Clients v.5.4
+name: Update Clients v.5.5
 
 on:
   push:
@@ -84,8 +84,8 @@ jobs:
 
           # Store the current values using awk
           OLD_PHONE_NAME=$(awk -F'[<>]' '/<span[^>]*>[0-9]{4} [0-9]{4}( [0-9]{4})? \([^)]+\)/ {print $3}' $(find . -name "*.html") | head -n1)
-          OLD_WAURL=$(awk -F'"' '/class="whatsapp-floating".*href=/ {print $4}' $(find . -name "*.html") | head -n1)
-          OLD_PHURL=$(awk -F'"' '/class="tlp-floating".*href=/ {print $4}' $(find . -name "*.html") | head -n1)
+          OLD_WAURL=$(awk -F'"' '/class="whatsapp-floating".*href="/ {for(i=1;i<=NF;i++) if($i~/^https?:/) {print $i; exit}}' $(find . -name "*.html") | head -n1)
+          OLD_PHURL=$(awk -F'"' '/class="tlp-floating".*href="/ {for(i=1;i<=NF;i++) if($i~/^https?:/) {print $i; exit}}' $(find . -name "*.html") | head -n1)
 
           echo "Old PHONE_NAME: $OLD_PHONE_NAME"
           echo "Old WAURL: $OLD_WAURL"
@@ -111,9 +111,6 @@ jobs:
               sed -i "s|href=\"$OLD_PHURL_ESCAPED\"|href=\"$NEW_PHURL_ESCAPED\"|g" "$file"
             fi
           done
-
-      - name: Show git diff
-        run: git diff
 
       - name: Commit and push changes
         run: |
