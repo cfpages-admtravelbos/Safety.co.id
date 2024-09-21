@@ -1,4 +1,4 @@
-name: Update Clients v.5.2
+name: Update Clients v.5.3
 
 on:
   push:
@@ -79,36 +79,36 @@ jobs:
         run: |
           # Function to escape special characters for sed
           escape_for_sed() {
-            echo "$1" | sed -e 's/[]\/$*.^[]/\\&/g'
+            echo "$1" | sed -e 's/[\/&]/\\&/g'
           }
 
           # Store the current values
-          OLD_WAURL=$(grep -oP '(?<=class="whatsapp-floating"[^>]*href=")[^"]*' $(find . -name "*.html") | head -n1)
-          OLD_PHURL=$(grep -oP '(?<=class="tlp-floating"[^>]*href=")[^"]*' $(find . -name "*.html") | head -n1)
           OLD_PHONE_NAME=$(grep -oP '(?<=<span[^>]*>)\d{4} \d{4}( \d{4})? \([^\)]+\)(?=</span>)' $(find . -name "*.html") | head -n1)
+          OLD_WAURL=$(grep -oP '(?<=class="whatsapp-floating"[^>]*href=")[^"]*(?="[^>]*>)' $(find . -name "*.html") | head -n1)
+          OLD_PHURL=$(grep -oP '(?<=class="tlp-floating"[^>]*href=")[^"]*(?="[^>]*>)' $(find . -name "*.html") | head -n1)
 
+          echo "Old PHONE_NAME: $OLD_PHONE_NAME"
           echo "Old WAURL: $OLD_WAURL"
           echo "Old PHURL: $OLD_PHURL"
-          echo "Old PHONE_NAME: $OLD_PHONE_NAME"
 
           # Escape special characters
-          OLD_WAURL_ESCAPED=$(escape_for_sed "$OLD_WAURL")
-          OLD_PHURL_ESCAPED=$(escape_for_sed "$OLD_PHURL")
           OLD_PHONE_NAME_ESCAPED=$(escape_for_sed "$OLD_PHONE_NAME")
-          NEW_WAURL_ESCAPED=$(escape_for_sed "$WAURL")
-          NEW_PHURL_ESCAPED=$(escape_for_sed "$PHURL")
           NEW_PHONE_NAME_ESCAPED=$(escape_for_sed "${PHONE} (${NAME})")
+          OLD_WAURL_ESCAPED=$(escape_for_sed "$OLD_WAURL")
+          NEW_WAURL_ESCAPED=$(escape_for_sed "$WAURL")
+          OLD_PHURL_ESCAPED=$(escape_for_sed "$OLD_PHURL")
+          NEW_PHURL_ESCAPED=$(escape_for_sed "$PHURL")
 
           # Update files
           find . -name "*.html" -type f | while read -r file; do
-            if [ -n "$OLD_WAURL" ] && [ -n "$WAURL" ]; then
-              sed -i "s|$OLD_WAURL_ESCAPED|$NEW_WAURL_ESCAPED|g" "$file"
-            fi
-            if [ -n "$OLD_PHURL" ] && [ -n "$PHURL" ]; then
-              sed -i "s|$OLD_PHURL_ESCAPED|$NEW_PHURL_ESCAPED|g" "$file"
-            fi
             if [ -n "$OLD_PHONE_NAME" ] && [ -n "$PHONE" ] && [ -n "$NAME" ]; then
               sed -i "s|$OLD_PHONE_NAME_ESCAPED|$NEW_PHONE_NAME_ESCAPED|g" "$file"
+            fi
+            if [ -n "$OLD_WAURL" ] && [ -n "$WAURL" ]; then
+              sed -i "s|href=\"$OLD_WAURL_ESCAPED\"|href=\"$NEW_WAURL_ESCAPED\"|g" "$file"
+            fi
+            if [ -n "$OLD_PHURL" ] && [ -n "$PHURL" ]; then
+              sed -i "s|href=\"$OLD_PHURL_ESCAPED\"|href=\"$NEW_PHURL_ESCAPED\"|g" "$file"
             fi
           done
 
