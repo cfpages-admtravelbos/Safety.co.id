@@ -1,4 +1,4 @@
-name: Update Clients v.5
+name: Update Clients v.5.1
 
 on:
   push:
@@ -74,6 +74,13 @@ jobs:
           echo "NAME=$NAME" >> $GITHUB_ENV
           echo "PHONE=$PHONE" >> $GITHUB_ENV
 
+      - name: Debug extracted variables
+        run: |
+          echo "WAURL: $WAURL"
+          echo "PHURL: $PHURL"
+          echo "NAME: $NAME"
+          echo "PHONE: $PHONE"
+
       - name: Debug List of unique phrases matching regex
         if: env.exists == 'true'
         run: |
@@ -104,21 +111,31 @@ jobs:
           for file in $(find . -name '*.html'); do
             # Update the href for WhatsApp links
             if [ -n "${WAURL}" ]; then
-              sed -i -E "s@(class=\"whatsapp-floating\"[^>]*href=\")[^\"]*(https?://(what\.sapp|klik)[^💬]*💬[^\"]*)\"@\1${WAURL}\"@" "$file"
+              sed -i.bak -E "s@(class=\"whatsapp-floating\"[^>]*href=\")[^\"]*(https?://(what\.sapp|klik)[^💬]*💬[^\"]*)\"@\1${WAURL}\"@" "$file"
+              echo "WhatsApp update result for $file:"
+              diff "$file.bak" "$file" || echo "No changes for WhatsApp in $file"
             fi
       
             # Update the href for phone links
             if [ -n "${PHURL}" ]; then
-              sed -i -E "s@(class=\"tlp-floating\"[^>]*href=\")[^\"]*(https?://(con\.tact|klik)[^📞]*📞[^\"]*)\"@\1${PHURL}\"@" "$file"
+              sed -i.bak -E "s@(class=\"tlp-floating\"[^>]*href=\")[^\"]*(https?://(con\.tact|klik)[^📞]*📞[^\"]*)\"@\1${PHURL}\"@" "$file"
+              echo "Phone update result for $file:"
+              diff "$file.bak" "$file" || echo "No changes for Phone in $file"
             fi
       
             # Update span text where the text format matches number (Name)
             if [ -n "${PHONE}" ] && [ -n "${NAME}" ]; then
-              sed -i -E "s@(<span[^>]*>)\d{4} \d{4}( \d{4})? \([^\)]+\)(</span>)@\1${PHONE} (${NAME})\2@" "$file"
+              sed -i.bak -E "s@(<span[^>]*>)\d{4} \d{4}( \d{4})? \([^\)]+\)(</span>)@\1${PHONE} (${NAME})\3@" "$file"
+              echo "Span text update result for $file:"
+              diff "$file.bak" "$file" || echo "No changes for Span text in $file"
             fi
           done
+
+      - name: Show git diff
+        run: git diff
       
-          # Commit and push changes if any
+      - name: Commit and push changes
+        run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
           if ! git diff --quiet; then
