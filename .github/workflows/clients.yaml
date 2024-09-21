@@ -1,4 +1,4 @@
-name: Update Clients v.5.3
+name: Update Clients v.5.4
 
 on:
   push:
@@ -82,10 +82,10 @@ jobs:
             echo "$1" | sed -e 's/[\/&]/\\&/g'
           }
 
-          # Store the current values
-          OLD_PHONE_NAME=$(grep -oP '(?<=<span[^>]*>)\d{4} \d{4}( \d{4})? \([^\)]+\)(?=</span>)' $(find . -name "*.html") | head -n1)
-          OLD_WAURL=$(grep -oP '(?<=class="whatsapp-floating"[^>]*href=")[^"]*(?="[^>]*>)' $(find . -name "*.html") | head -n1)
-          OLD_PHURL=$(grep -oP '(?<=class="tlp-floating"[^>]*href=")[^"]*(?="[^>]*>)' $(find . -name "*.html") | head -n1)
+          # Store the current values using awk
+          OLD_PHONE_NAME=$(awk -F'[<>]' '/<span[^>]*>[0-9]{4} [0-9]{4}( [0-9]{4})? \([^)]+\)/ {print $3}' $(find . -name "*.html") | head -n1)
+          OLD_WAURL=$(awk -F'"' '/class="whatsapp-floating".*href=/ {print $4}' $(find . -name "*.html") | head -n1)
+          OLD_PHURL=$(awk -F'"' '/class="tlp-floating".*href=/ {print $4}' $(find . -name "*.html") | head -n1)
 
           echo "Old PHONE_NAME: $OLD_PHONE_NAME"
           echo "Old WAURL: $OLD_WAURL"
