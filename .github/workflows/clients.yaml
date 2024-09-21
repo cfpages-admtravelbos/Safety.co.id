@@ -1,4 +1,4 @@
-name: Update Clients v.5.1
+name: Update Clients v.5.2
 
 on:
   push:
@@ -61,13 +61,6 @@ jobs:
             fi
           done
 
-          # Output for debugging purposes
-          echo "Extracted values:"
-          echo "WAURL=${WAURL}"
-          echo "PHURL=${PHURL}"
-          echo "NAME=${NAME}"
-          echo "PHONE=${PHONE}"
-      
           # Output variables
           echo "WAURL=$WAURL" >> $GITHUB_ENV
           echo "PHURL=$PHURL" >> $GITHUB_ENV
@@ -81,59 +74,47 @@ jobs:
           echo "NAME: $NAME"
           echo "PHONE: $PHONE"
 
-      - name: Debug List of unique phrases matching regex
-        if: env.exists == 'true'
-        run: |
-          echo "Checking span and href matches:"
-          for file in $(find . -name '*.html'); do
-            echo "Processing $file"
-
-            # Print unique WhatsApp href matches
-            grep -oP '(class="whatsapp-floating"[^>]*href=")[^"]*' "$file" | sort | uniq | while read -r match; do
-              echo "WhatsApp href match: $match"
-            done
-            
-            # Print unique phone/href matches
-            grep -oP '(class="tlp-floating"[^>]*href=")[^"]*' "$file" | sort | uniq | while read -r match; do
-              echo "Phone href match: $match"
-            done
-            
-            # Print unique span text matches
-            grep -oP '(<span[^>]*>)\d{4} \d{4}( \d{4})? \([^\)]+\)(</span>)' "$file" | sort | uniq | while read -r match; do
-              echo "Span text match: $match"
-            done
-          done
-
       - name: Update Clients
         if: env.exists == 'true'
         run: |
-          # Use the variables set previously from GITHUB_ENV
-          for file in $(find . -name '*.html'); do
-            # Update the href for WhatsApp links
-            if [ -n "${WAURL}" ]; then
-              sed -i.bak -E "s@(class=\"whatsapp-floating\"[^>]*href=\")[^\"]*(https?://(what\.sapp|klik)[^💬]*💬[^\"]*)\"@\1${WAURL}\"@" "$file"
-              echo "WhatsApp update result for $file:"
-              diff "$file.bak" "$file" || echo "No changes for WhatsApp in $file"
+          # Function to escape special characters for sed
+          escape_for_sed() {
+            echo "$1" | sed -e 's/[]\/$*.^[]/\\&/g'
+          }
+
+          # Store the current values
+          OLD_WAURL=$(grep -oP '(?<=class="whatsapp-floating"[^>]*href=")[^"]*' $(find . -name "*.html") | head -n1)
+          OLD_PHURL=$(grep -oP '(?<=class="tlp-floating"[^>]*href=")[^"]*' $(find . -name "*.html") | head -n1)
+          OLD_PHONE_NAME=$(grep -oP '(?<=<span[^>]*>)\d{4} \d{4}( \d{4})? \([^\)]+\)(?=</span>)' $(find . -name "*.html") | head -n1)
+
+          echo "Old WAURL: $OLD_WAURL"
+          echo "Old PHURL: $OLD_PHURL"
+          echo "Old PHONE_NAME: $OLD_PHONE_NAME"
+
+          # Escape special characters
+          OLD_WAURL_ESCAPED=$(escape_for_sed "$OLD_WAURL")
+          OLD_PHURL_ESCAPED=$(escape_for_sed "$OLD_PHURL")
+          OLD_PHONE_NAME_ESCAPED=$(escape_for_sed "$OLD_PHONE_NAME")
+          NEW_WAURL_ESCAPED=$(escape_for_sed "$WAURL")
+          NEW_PHURL_ESCAPED=$(escape_for_sed "$PHURL")
+          NEW_PHONE_NAME_ESCAPED=$(escape_for_sed "${PHONE} (${NAME})")
+
+          # Update files
+          find . -name "*.html" -type f | while read -r file; do
+            if [ -n "$OLD_WAURL" ] && [ -n "$WAURL" ]; then
+              sed -i "s|$OLD_WAURL_ESCAPED|$NEW_WAURL_ESCAPED|g" "$file"
             fi
-      
-            # Update the href for phone links
-            if [ -n "${PHURL}" ]; then
-              sed -i.bak -E "s@(class=\"tlp-floating\"[^>]*href=\")[^\"]*(https?://(con\.tact|klik)[^📞]*📞[^\"]*)\"@\1${PHURL}\"@" "$file"
-              echo "Phone update result for $file:"
-              diff "$file.bak" "$file" || echo "No changes for Phone in $file"
+            if [ -n "$OLD_PHURL" ] && [ -n "$PHURL" ]; then
+              sed -i "s|$OLD_PHURL_ESCAPED|$NEW_PHURL_ESCAPED|g" "$file"
             fi
-      
-            # Update span text where the text format matches number (Name)
-            if [ -n "${PHONE}" ] && [ -n "${NAME}" ]; then
-              sed -i.bak -E "s@(<span[^>]*>)\d{4} \d{4}( \d{4})? \([^\)]+\)(</span>)@\1${PHONE} (${NAME})\3@" "$file"
-              echo "Span text update result for $file:"
-              diff "$file.bak" "$file" || echo "No changes for Span text in $file"
+            if [ -n "$OLD_PHONE_NAME" ] && [ -n "$PHONE" ] && [ -n "$NAME" ]; then
+              sed -i "s|$OLD_PHONE_NAME_ESCAPED|$NEW_PHONE_NAME_ESCAPED|g" "$file"
             fi
           done
 
       - name: Show git diff
         run: git diff
-      
+
       - name: Commit and push changes
         run: |
           git config --global user.name 'github-actions[bot]'
@@ -141,8 +122,6 @@ jobs:
           if ! git diff --quiet; then
             git add .
             git commit -m "Update URLs: WAURL: ${WAURL}, PHURL: ${PHURL}, Phone: ${PHONE}, Name: ${NAME}"
-      
-            # Push changes
             git remote set-url origin https://x-access-token:${{ secrets.GH_PAT }}@github.com/${{ github.repository }}
             git push origin HEAD:main
           else
