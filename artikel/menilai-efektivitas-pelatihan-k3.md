@@ -1,0 +1,193 @@
+---
+article_id: SAF-16-04
+title: "Dari Pelatihan ke Kompetensi: Cara Menilai Transfer ke Lapangan"
+slug: "menilai-efektivitas-pelatihan-k3"
+description: "Cover learning objective, literacy/language, practice, assessment validity, field observation, coaching, work-system barriers, refresher/change triggers, and outcome evidence."
+status: outline
+publication_date: "2026-04-10"
+publication_date_basis: editorial_backfill
+date_modified: null
+parent_topic: SAF-16
+primary_intent: "Verify whether learning is understood, demonstrated, transferred, and sustained at work."
+reader_community: "Safety.co.id"
+reader_address: "Kawan Safety.co.id"
+final_route: "/artikel/menilai-efektivitas-pelatihan-k3.html"
+technical_review: required
+sources:
+  - "https://peraturan.bpk.go.id/Details/47614/uu-no-1-tahun-1970"
+  - "https://peraturan.bpk.go.id/Details/342991/permenaker-no-13-tahun-2025"
+  - "https://www.ilo.org/publications/safety-and-health-construction-revised-edition"
+  - "https://www.iso.org/standard/63787.html"
+  - "https://peraturan.bpk.go.id/Details/45288/uu-no-8-tahun-1999"
+  - "https://jdih.kemendag.go.id/pdf/Regulasi/2019/PP%20Nomor%2080%20Tahun%202019.pdf"
+  - "https://peraturan.bpk.go.id/Details/229798/uu-no-27-tahun-2022"
+  - "https://www.iso.org/standard/62542.html"
+---
+
+<!-- GENERATED ARTICLE OUTLINE: expand this file; do not delete scope/evidence constraints -->
+
+# Dari Pelatihan ke Kompetensi: Cara Menilai Transfer ke Lapangan
+
+## Assignment lock
+
+- **Writer task:** Expand this file into one complete article answering: “Dari Pelatihan ke Kompetensi: Cara Menilai Transfer ke Lapangan”
+- **Reader and situation:** Training owner, supervisor, or auditor seeing high attendance but recurring failures.
+- **Reader outcome:** Cover learning objective, literacy/language, practice, assessment validity, field observation, coaching, work-system barriers, refresher/change triggers, and outcome evidence.
+- **Primary intent:** Verify whether learning is understood, demonstrated, transferred, and sustained at work.
+- **Reader community:** `Safety.co.id`
+- **Primary friendly address:** `Kawan Safety.co.id`
+- **Natural variants:** `Sobat Safety.co.id` and `Teman Safety.co.id`
+- **Address cadence:** use a friendly project-community address three to five times in a typical long article, only at natural conversational pivots.
+- **Scope boundary:** Does not certify a person or treat incident absence as competence proof; authorization belongs to SAF-16-01 and assurance to SAF-17-04.
+- **Final public route:** `/artikel/menilai-efektivitas-pelatihan-k3.html`
+- **Appointed CMS date:** `2026-04-10` (`editorial_backfill`; preserve exactly)
+- **Target length:** normally 1,400–2,200 useful words; stop earlier if the answer is complete.
+- **Do not drift:** do not turn this page into a broad category page, sales landing page, or substitute for professional/project approval.
+
+## Opening instructions
+
+- Open with the exact short salutation: **“Halo, Kawan Safety.co.id!”**
+- Start with the concrete decision, confusion, risk, or costly shortcut behind **Dari Pelatihan ke Kompetensi: Cara Menilai Transfer ke Lapangan**.
+- Give the short answer within the first two or three paragraphs.
+- State what evidence or condition can change that answer.
+- Later, sprinkle `Kawan Safety.co.id`, `Sobat Safety.co.id`, or `Teman Safety.co.id` at useful warnings, decisions, examples, or the conclusion; do not force them into every section.
+- Do not use a generic industry-history or “Di era digital” introduction.
+
+## Evidence packet
+
+Use the original source links below. Do not cite this outline or `GLOBAL_RESEARCH.md`.
+
+### KR-02
+
+- **Original sources:** [UU No. 1 Tahun 1970](https://peraturan.bpk.go.id/Details/47614/uu-no-1-tahun-1970).
+- **Purpose for this article:** Establish the national foundation without converting one law into a complete site obligation register.
+- **Safe grounded facts:** Applicability depends on the actual workplace, activity, people, equipment, material, and implementing rules; a web article cannot determine compliance.
+- **Limits:** Use current consolidated law and sector/local rules; obtain Indonesian K3/legal review for a definitive duty.
+
+### KR-04
+
+- **Original sources:** [Permenaker No. 13 Tahun 2025](https://peraturan.bpk.go.id/Details/342991/permenaker-no-13-tahun-2025).
+- **Purpose for this article:** Prevent articles from repeating the revoked 1987 P2K3 rule.
+- **Safe grounded facts:** Employer/management and worker representation, current appointment evidence, roles, meetings, inputs, outputs, and follow-up are separate evidence questions.
+- **Limits:** Confirm entity applicability and current implementing practice with the competent authority and K3/legal reviewer.
+
+### KR-07
+
+- **Original sources:** [ILO Safety and Health in Construction code](https://www.ilo.org/publications/safety-and-health-construction-revised-edition), [ISO 45001 overview](https://www.iso.org/standard/63787.html).
+- **Purpose for this article:** Ground issuer/receiver roles, supporting controls, field verification, change, suspension, closeout, and handback.
+- **Safe grounded facts:** Permit scope, task assessment, isolation, testing, simultaneous operations, authorization, handover, and restoration are different checks.
+- **Limits:** Never provide a universal form, mandatory list, validity time, isolation sequence, gas criterion, or authorization from generic research.
+
+### KR-21
+
+- **Original sources:** [UU No. 8 Tahun 1999](https://peraturan.bpk.go.id/Details/45288/uu-no-8-tahun-1999), [PP No. 80 Tahun 2019](https://jdih.kemendag.go.id/pdf/Regulasi/2019/PP%20Nomor%2080%20Tahun%202019.pdf).
+- **Purpose for this article:** Replace price-only selection and marketplace claims with comparable, retrievable evidence.
+- **Safe grounded facts:** A logo, test excerpt, certificate image, seller rating, or “standard-compliant” phrase does not prove the delivered model or installed system conforms.
+- **Limits:** No fabricated stock, price, client, approval, certificate, warranty, availability, or legal entitlement.
+
+### KR-23
+
+- **Original sources:** [UU No. 27 Tahun 2022](https://peraturan.bpk.go.id/Details/229798/uu-no-27-tahun-2022), [ISO 15489-1:2016 record](https://www.iso.org/standard/62542.html).
+- **Purpose for this article:** Ground approvals, versions, distribution, field access, retention, evidence provenance, migration, and personal-data boundaries.
+- **Safe grounded facts:** Legal register, risk assessment, permit, inspection, training, credential, incident, health record, corrective action, and audit evidence have different owners and sensitivity.
+- **Limits:** Retention, access, lawful basis, breach response, health data, litigation hold, and regulator submission require current legal and records/privacy review.
+
+## Evidence gates
+
+- **TOPIC-GATE:** EG-01, EG-09, EG-10, EG-12
+
+If a gate affects the article's main conclusion, keep a visible `[NEEDS ...]` marker for coordinator review. Do not guess.
+
+## Internal-link plan
+
+### Existing local routes
+
+- `/shop/rc-006-jas-hujan-lapangan-kuning/` — use only if it helps the reader's next step; verify the anchor describes the destination.
+- `/shop/rain-coat-safety-lapangan-rc-015/` — use only if it helps the reader's next step; verify the anchor describes the destination.
+- `/shop/rain-coat-safety-lapangan-rc-014/` — use only if it helps the reader's next step; verify the anchor describes the destination.
+- `/shop/jas-hujan-keamanan-lapangan-rc-010/` — use only if it helps the reader's next step; verify the anchor describes the destination.
+
+### Planned sibling articles
+
+These are future routes. Do not link them as live until their HTML exists.
+
+- `SAF-16-02` → `/artikel/sertifikat-lisensi-kompetensi-otorisasi.html` — Sertifikat, Lisensi, Kompetensi, dan Otorisasi: Empat Bukti yang Tidak Sama
+- `SAF-16-03` → `/artikel/supervisi-berbasis-risiko-dan-kompetensi.html` — Menentukan Tingkat Supervisi Berdasarkan Risiko dan Kemampuan Aktual
+- `SAF-16-05` → `/artikel/induksi-k3-berdasarkan-peran.html` — Induksi K3 untuk Pekerja, Kontraktor, Tamu, dan Pekerja Singkat
+- `SAF-16-06` → `/artikel/perubahan-persyaratan-kompetensi-k3.html` — Mengelola Kedaluwarsa dan Perubahan Persyaratan Kompetensi K3
+
+<!-- BEGIN PUBLIC ARTICLE SECTIONS -->
+
+## Hasil akhir dan prasyarat
+
+- **Purpose:** Nyatakan hasil yang ingin dicapai, siapa yang berwenang, data awal, alat/dokumen, dan kondisi yang harus tersedia.
+- **Tie back to this article:** Keep the explanation specific to “Dari Pelatihan ke Kompetensi: Cara Menilai Transfer ke Lapangan”.
+- **Evidence:** Use only relevant facts from the evidence packet; add an original source near consequential claims.
+- **Practical value:** Add a concrete question, conditional scenario, checklist item, or decision consequence.
+- **Boundary:** Preserve the assignment lock and evidence gates; do not fill missing project facts.
+
+## Langkah 1 — tetapkan scope
+
+- **Purpose:** Jelaskan objek, batas pekerjaan, antarmuka, risiko, serta hal yang sengaja tidak dikerjakan.
+- **Tie back to this article:** Keep the explanation specific to “Dari Pelatihan ke Kompetensi: Cara Menilai Transfer ke Lapangan”.
+- **Evidence:** Use only relevant facts from the evidence packet; add an original source near consequential claims.
+- **Practical value:** Add a concrete question, conditional scenario, checklist item, or decision consequence.
+- **Boundary:** Preserve the assignment lock and evidence gates; do not fill missing project facts.
+
+## Langkah 2 — kumpulkan dan cocokkan bukti
+
+- **Purpose:** Susun dokumen, observasi, data, produk, atau standar yang harus cocok dengan kasus.
+- **Tie back to this article:** Keep the explanation specific to “Dari Pelatihan ke Kompetensi: Cara Menilai Transfer ke Lapangan”.
+- **Evidence:** Use only relevant facts from the evidence packet; add an original source near consequential claims.
+- **Practical value:** Add a concrete question, conditional scenario, checklist item, or decision consequence.
+- **Boundary:** Preserve the assignment lock and evidence gates; do not fill missing project facts.
+
+## Langkah 3 — jalankan urutan kerja
+
+- **Purpose:** Berikan urutan konseptual yang dapat diikuti tanpa berubah menjadi instruksi teknis berbahaya.
+- **Tie back to this article:** Keep the explanation specific to “Dari Pelatihan ke Kompetensi: Cara Menilai Transfer ke Lapangan”.
+- **Evidence:** Use only relevant facts from the evidence packet; add an original source near consequential claims.
+- **Practical value:** Add a concrete question, conditional scenario, checklist item, or decision consequence.
+- **Boundary:** Preserve the assignment lock and evidence gates; do not fill missing project facts.
+
+## Hold point dan kondisi berhenti
+
+- **Purpose:** Nyatakan kapan pekerjaan tidak boleh diteruskan tanpa review, tes, atau persetujuan.
+- **Tie back to this article:** Keep the explanation specific to “Dari Pelatihan ke Kompetensi: Cara Menilai Transfer ke Lapangan”.
+- **Evidence:** Use only relevant facts from the evidence packet; add an original source near consequential claims.
+- **Practical value:** Add a concrete question, conditional scenario, checklist item, or decision consequence.
+- **Boundary:** Preserve the assignment lock and evidence gates; do not fill missing project facts.
+
+## Verifikasi hasil dan handover
+
+- **Purpose:** Buat checklist penerimaan, rekaman, tindak lanjut, dan pemicu koreksi.
+- **Tie back to this article:** Keep the explanation specific to “Dari Pelatihan ke Kompetensi: Cara Menilai Transfer ke Lapangan”.
+- **Evidence:** Use only relevant facts from the evidence packet; add an original source near consequential claims.
+- **Practical value:** Add a concrete question, conditional scenario, checklist item, or decision consequence.
+- **Boundary:** Preserve the assignment lock and evidence gates; do not fill missing project facts.
+
+## Objection or shortcut to address
+
+- Identify one realistic shortcut a reader may prefer.
+- Explain why it can fail in this exact context, using mechanism and evidence rather than scolding.
+- Give the safer or more reliable alternative.
+
+## Required conclusion
+
+- Answer the title again in one compact, non-repetitive form.
+- Give the reader the next action, document, question, inspection, or professional review to obtain.
+- End with an operating rule or honest boundary. Do not end with a generic summary.
+
+## Draft completion checklist
+
+- [ ] Opening answers the main question within two or three paragraphs.
+- [ ] The article opens with `Halo, Kawan Safety.co.id!` and uses friendly `Safety.co.id` community address naturally three to five times total.
+- [ ] Every H2 above has been replaced with finished, non-repetitive prose.
+- [ ] Facts, project facts, inferences, assumptions, and judgments are not blurred together.
+- [ ] Every consequential claim has an original source or `[NEEDS ...]` marker.
+- [ ] No exact standard clause, number, price, test result, capacity, warranty, or personal experience was invented.
+- [ ] Internal links use exact listed routes and helpful natural anchors.
+- [ ] Future sibling routes are not presented as live.
+- [ ] The public prose does not mention prompts, outlines, SEO, AI, or evidence gates.
+- [ ] Front matter is preserved; `status` changed from `outline` to `draft` only after completion.
+- [ ] Conclusion gives a concrete next action and an honest limit.
