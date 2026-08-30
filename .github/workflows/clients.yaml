@@ -32,8 +32,8 @@ jobs:
           fi
 
       - name: Process clients
-              if: env.exists == 'true'
-              run: |
+        if: env.exists == 'true'
+        run: |
                 # Function to escape special characters for sed
                 escape_for_sed() {
                   echo "$1" | sed -e 's/[\/&]/\\&/g'
